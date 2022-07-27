@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        
+    <record id="test_kanban_new" model="ir.ui.view">
+        <field name="name">lahsen_kanban</field>
+        <field name="model">stage.stage</field>
+        <field name="arch" type="xml">
+    <kanban>
+    <field name="id" />
+    <field name="nom"/>
+    <field name="image"/>
+    <field name="gender"/>
+    <field name="email"/>
+    <field name="cin"/>
+    <field name="image" />
+    <field name="contact"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_stage_stage_kanban">
+                            <field name="image" widget="image" class="o_kanban_image_fill_left"/>
+
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="nom"/>
+                                        </strong>
+                                        <span t-if="record.job_title.raw_value" class="o_kanban_record_subtitle"><field name="email"/></span>
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li id="last_login"/>
+                                    <li t-if="record.work_email.raw_value"><field name="cin"/></li>
+                                    <li t-if="record.work_phone.raw_value" class="o_force_ltr"><field name="contact"/></li>
+                                </ul>
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left"/>
+                                        <div class="oe_kanban_bottom_right">
+                                            <a title="Chat" icon="fa-comments" href="#" class="ml8 o_employee_chat_btn" attrs="{'invisible': [('id','=', False)]}" role="button"><i class="fa fa-comments"/></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </t>
+                    </templates>
+                </kanban>
+        </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="lahsen_kanban_test">
+            <field name="name">kanban test window</field>
+            <field name="res_model">stage.stage</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>    
+
+        <menuitem id="kanban_test_menu" name="Liste stagiaires kanban" />
+        <!-- <menuitem id="kanban_test_view" action="lahsen_kanban_test"/> -->
+
+    </data>
+</odoo>

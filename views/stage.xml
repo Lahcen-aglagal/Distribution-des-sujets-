@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record model="ir.actions.act_window" id="lahsen_kanban_test">
+            <field name="name">kanban test window</field>
+            <field name="res_model">stage.stage</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+         <menuitem name="Stagiaires"  id="stagiaires_menu_root" action="lahsen_kanban_test" groups="graduation_project.group_final_administrator" />
+    </data>
+</odoo>

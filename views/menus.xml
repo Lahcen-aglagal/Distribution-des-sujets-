@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+        <menuitem id="final_project_root" name="Final Project" sequence="0" web_icon="basic_hms,static/description/icon.png"/>
+        <!-- This Menu Item must have a parent and an action -->
+
+        <menuitem parent="final_project_root" name="PROJETS" action="projects_action" id="project_menu" sequence="0" groups="graduation_project.group_final_administrator,graduation_project.group_student,graduation_project.group_professor"/>
+        <menuitem id="department_menu" name="Departements" parent="final_project_root" action="departments_action" sequence="4" groups="graduation_project.group_final_administrator"/>
+        <menuitem name="Etudiants" id="student_menu" action="student_action" parent="final_project_root" groups="graduation_project.group_final_administrator"/>
+        <menuitem name="Mes Etudiants" id="my_student_menu" action="my_student_action" parent="final_project_root" groups="graduation_project.group_professor"/>
+        <menuitem id="teacher_all_menu" name="Professeur" action="school_teacher_action" parent="final_project_root" groups="graduation_project.group_final_administrator" />
+        <menuitem id="fianl_project_menu_root" name="Avancement" parent="final_project_root" action="final_project_action" sequence="10" groups="graduation_project.group_final_administrator,graduation_project.group_student,graduation_project.group_professor"/>
+        <menuitem name="Mon profile" parent="final_project_root" id="select_project" action="student_action" groups="graduation_project.group_student" />
+    <!-- </data> -->
+
+    </data>
+</odoo>

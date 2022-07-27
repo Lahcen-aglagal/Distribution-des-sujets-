@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="module_category_graduation_project">
+            <field name="name">Final Project</field>
+            <field name="description">Helps you manage Final Project Processes.</field>
+            <field name="sequence">7</field>
+        </record>
+
+         <record id="group_student" model="res.groups">
+            <field name="name">student</field>
+             <field name="implied_ids" eval="[(4, ref('base.group_no_one'))]"/>
+            <field name="category_id" ref="graduation_project.module_category_graduation_project"/>
+        </record>
+
+         <record id="group_professor" model="res.groups">
+            <field name="name">Professor</field>
+             <field name="implied_ids" eval="[(4,ref('hr.group_hr_user'))]"/>
+            <field name="category_id" ref="graduation_project.module_category_graduation_project"/>
+        </record>
+
+        <record id="group_final_administrator" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="comment">the user will have access to all records of everyone .</field>
+            <field name="category_id" ref="graduation_project.module_category_graduation_project"/>
+            <field name="implied_ids" eval="[(4,ref('hr.group_hr_manager'))]"/>
+        </record>
+        
+        <record id="rule_student_visibility_user" model="ir.rule">
+            <field name="name">Student can only see his record</field>
+            <field name="model_id" ref="model_student_student"/>
+            <field name="groups" eval="[(4, ref('graduation_project.group_student'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[('related_user_id','=',user.id)]</field>
+        </record>
+<!--     teacher can see only the advencement of his student   -->
+              <record id="rule_professor_visibility_avencement" model="ir.rule">
+            <field name="name">teacher can see only the advencement of his student</field>
+            <field name="model_id" ref="model_avencement_projet"/>
+            <field name="groups" eval="[(4, ref('graduation_project.group_professor'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[('teacher_id.user_id','=',user.id)]</field>
+        </record>
+<!--        -->
+
+        <record id="rule_student_visibility_avencement" model="ir.rule">
+            <field name="name">Student can only see his advencement</field>
+            <field name="model_id" ref="model_avencement_projet"/>
+            <field name="groups" eval="[(4, ref('graduation_project.group_student'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('current_user','=',user.id)]</field>
+        </record>
+<!--        -->
+
+        <record id="rule_professor_project" model="ir.rule">
+            <field name="name">professor see his projects</field>
+            <field name="model_id" ref="model_final_project"/>
+            <field name="groups" eval="[(4, ref('graduation_project.group_professor'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+        </record>
+
+         <record id="rule_student_project_user" model="ir.rule">
+            <field name="name">Student can only see his projects</field>
+            <field name="model_id" ref="model_final_project"/>
+            <field name="groups" eval="[(4, ref('graduation_project.group_student'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[('department_id','=',user.graduatio_department_id.id)]</field>
+        </record>
+    </data>
+</odoo>

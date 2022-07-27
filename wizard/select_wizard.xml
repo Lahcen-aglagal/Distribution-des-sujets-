@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="select_project_wizard_form" model="ir.ui.view">
+            <field name="name">select.project.wizard.form</field>
+            <field name="model">select.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                  <group>
+                    <group>
+
+                      <field name="student_id" options="{'no_open':True, 'no_create': True}"/>
+                      <field name="project_ids" attrs="{'invisible':[('student_id','=', False)]}" widget="many2many_tags"
+                      options="{'limit': 3, 'create': false, 'create_edit': false, 'no_open': True}"/>
+                    </group>
+                  </group>
+                  <footer>
+                    <button string="Set Projects" type="object" name="set_projects" class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-secondary" special="cancel" data-hotkey="z"/>
+                  </footer>
+                </form>
+            </field>
+    </record>
+    <record id="select_wizard_action" model="ir.actions.act_window">
+        <field name="name">Select Projects</field>
+        <field name="res_model">select.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+  </data>
+</odoo>

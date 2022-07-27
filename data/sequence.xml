@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+        <record id="project_order" model="ir.sequence">
+                <field name="name">code Sequence</field>
+                <field name="code">project.sequence</field>
+                <field name="prefix">P</field>
+                <field eval="1" name="number_next"/>
+                <field eval="1" name="number_increment"/>
+                <field eval="True" name="use_date_range"/>
+                <field eval="False" name="company_id"/>
+                <field name="padding">4</field>
+        </record>
+       <record id="department_order" model="ir.sequence">
+                <field name="name">department Sequence</field>
+                <field name="code">department.sequence</field>
+                <field name="prefix">D</field>
+                <field eval="1" name="number_next"/>
+                <field eval="1" name="number_increment"/>
+                <field eval="True" name="use_date_range"/>
+                <field eval="False" name="company_id"/>
+                <field name="padding">4</field>
+        </record>
+        <record id="attachment_order" model="ir.sequence">
+                <field name="name">attachment Sequence</field>
+                <field name="code">avencement.project</field>
+                <field name="prefix">A</field>
+                <field eval="1" name="number_next"/>
+                <field eval="1" name="number_increment"/>
+                <field eval="True" name="use_date_range"/>
+                <field eval="False" name="company_id"/>
+                <field name="padding">4</field>
+        </record>
+  </data>
+</odoo>

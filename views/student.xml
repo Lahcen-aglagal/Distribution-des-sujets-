@@ -1,0 +1,151 @@
+<odoo>
+  <data>
+    <record id="student_view_form" model="ir.ui.view">
+        <field name="name">student_view_form</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <form string="Student">
+                <header>
+                    <button type="object" name="create_related_user"
+                            string="Create Student User"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('related_user_id', '!=', False)]}"/>
+                    <button name="%(select_wizard_action)d" type="action" string="Set Projects" class="oe_highlight" attrs="{'invisible':[('is_projects_selected','=',True)]}"  groups="graduation_project.group_student" />
+                    <field name="is_projects_selected" invisible="1"/>
+                    <field name="is_projects_validated" invisible="1"/>
+                    <button name="action_view_menu" string="Avencement" type="object" class="oe_highlight"
+                                                    groups="graduation_project.group_final_administrator"/>
+
+                    <button name="%(validate_project_action)d" string="Validate A Project" class="oe_highlight" type="action"
+                        groups="graduation_project.group_professor,graduation_project.group_final_administrator" attrs="{'invisible': ['|',('is_projects_validated','=',True), ('is_projects_selected','=', False)]}"/>
+                </header>
+                <sheet>
+                    <div>
+                        <field name="image" widget="image" class="oe_left oe_avatar"/>
+                    </div>
+
+                    <group>
+                        <group>
+                              <field name="related_user_id" readonly="1" groups="graduation_project.group_final_administrator"/>
+                              <field name="name"/>
+                              <field name="first_name"/>
+                              <field name="last_name"/>
+                              <field name="date_of_birth"/>
+                              <field name="age"/>
+                              <field name="father_name"/>
+                              <field name="mother_name"/>
+                              <field name="department_id" string="Specialization" domain="[('type','=','child')]" options="{'no_open':True}"/>
+                              <field name="teacher_id1" options="{'no_open':True}"/>
+                              <field name="ad_no"/>
+                            <field name="state" widget="state_selection" class="ml-auto" readonly="1"/>
+                        </group>
+                      <group>
+                          <field name="gender"/>
+                        <span class="o_form_label o_td_label" name="address_name">
+                                <b >Address</b>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="per_street" placeholder="Street..." class="o_address_street" />
+                                <field name="per_street2" placeholder="Street 2..." class="o_address_street" />
+                                <field name="per_city" placeholder="City" class="o_address_city" />
+                                <field name="per_country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                <field name="per_state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_create': True}" />
+                            </div>
+
+                            <field name="nationality"/>
+                          <field name="phone_number" widget="phone"/>
+                          <field name="email" widget="email"/>
+                          <field name="project_ids" widget="many2many_tags" options="{'no_open':True}"/>
+                          <br/>
+                          <field name="accepted_project" options="{'no_open':True,'no_create':True}"/>
+
+                      </group>
+
+
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+      <record id="student_view_tree" model="ir.ui.view">
+          <field name="name">student_view_tree</field>
+          <field name="model">student.student</field>
+          <field name="arch" type="xml">
+              <tree string="Students">
+                      <field name="name"/>
+                      <field name="date_of_birth"/>
+                      <field name="department_id" string="Specialization"/>
+                      <field name="teacher_id1"/>
+                      <field name="ad_no"/>
+                      <field name="gender"/>
+                      <field name="per_country_id"/>
+                      <field name="per_state_id"/>
+                      <field name="state" decoration-info="state == 'draft' or state == 'in_queue'" decoration-success="state == 'sending' or state == 'done'" widget="badge" readonly="1"/>
+                      <field name="login_date" position="attributes">
+                        <attribute name="groups">graduation_project.group_final_administrator</attribute>
+                      </field>
+              </tree>
+          </field>
+      </record>
+<!--      kanban users-->
+      <record id="student_view_kanban" model="ir.ui.view">
+        <field name="name">student_view_kanban</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+        <kanban class="o_kanban_mobile">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="login_date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img alt="Avatar" t-att-src="kanban_image('student.student', 'image', record.id.raw_value)"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <li class="mb4">
+                                            <strong><field name="name"/></strong>
+                                        </li>
+                                        <li class="mb4" t-if="record.email.raw_value" title="email"><i class="fa fa-envelope" role="img" aria-label="email"/> <field name="email" placeholder="userName@usms.ac.ma"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+         </field>
+      </record>
+
+        <record id="my_student_action" model="ir.actions.act_window">
+            <field name="name">My Students</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">student.student</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('teacher_id1.user_id','=',uid)]</field>
+        </record>
+
+  <record id="student_action" model="ir.actions.act_window">
+      <field name="name">Students</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">student.student</field>
+      <field name="view_mode">kanban,tree,form</field>
+  </record>
+      <!-- Inherit Form View to Modify it -->
+      <record id="hr_inherit" model="ir.ui.view">
+          <field name="name">hr_inherit</field>
+          <field name="model">hr.employee</field>
+          <field name="inherit_id" ref="hr.view_employee_form"/>
+          <field name="arch" type="xml">
+
+              <xpath expr="//field[@name='department_id']" position="replace">
+                  <field name="graduation_dep_id" domain="[('type','=','parent')]"/>
+              </xpath>
+
+          </field>
+      </record>
+  </data>
+</odoo>

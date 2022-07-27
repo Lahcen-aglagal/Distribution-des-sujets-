@@ -1,0 +1,22 @@
+<odoo>
+        <record id="voire_avencement" model="ir.ui.view">
+            <field name="name">avencement.wizard.form</field>
+            <field name="model">avencement.projet</field>
+            <field name="arch" type="xml">
+                <form string="commentaire">
+                        <field name="student_id"/>
+                    <footer>
+                        <button name="return_view_avencement" type="object" string="Voire l'etat d'avencement" class="oe_highlight"  groups="graduation_project.group_professor,graduation_project.group_final_administrator" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="etat_avencement" model="ir.actions.act_window">
+            <field name="name">Avencement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">avencement.projet</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+</odoo>
